@@ -82,11 +82,15 @@ class RecipeResource(Resource):
         )
         
         return recipe_to_update,201
-
+    
+    
+    @api.marshal_with(recipe_model)
     @api.doc('delete a recipe')
     def delete(self, id):
         """Delete a recipe"""
-        pass
+        recipe_to_Delete = Recipe.query.get_or_404(id)
+        recipe_to_Delete.delete()
+        return recipe_to_Delete,200
 
 
 if __name__ == '__main__':
