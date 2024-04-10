@@ -29,7 +29,7 @@ class Recipe(db.Model):
 class User(db.Model):
     """class user
     
-   id:interger
+   id:integer
    email:string
    username:string
    password:string
@@ -45,6 +45,19 @@ class User(db.Model):
     
     def __repr__(self) -> str:
         return f"<User: {self.username} >"
+    
+    
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        
+    def updatePasssword(self,password):
+        self.password=password
+        db.session.commit
+        
+    def delete(self):
+        db.session.delete()
+        db.session.commit()
     
     
         
