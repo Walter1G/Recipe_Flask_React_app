@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_restx import Api, Resource, fields
 from config import DevConfig
 from models import Recipe, User
-from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token
+from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required
 from exts import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
@@ -84,7 +84,27 @@ class SignUp(Resource):
 class LogIn(Resource):
     api.expect(login_model)
     def post(self):
-        pass
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+        
+        db_user = User.query.filter_by(username=username).first()      
+        
+        
+        # access_token= create_access_token(identity=)
+        
+        if db_user is None:
+            return {"message":"User does not exist"},404
+        
+        if db_user and check_password_hash(db_user.password,password):
+            
+            access_token=create_access_token(identity=db_user.username)
+            refresh_token = create_refresh_token(identity=db_user.username)
+            
+            return jsonify({
+                "access_token":access_token,
+                "refresh_token":refresh_token
+            })
 
 
 @api.route('/hello')
@@ -113,6 +133,7 @@ class RecipesResource(Resource):
 
     @api.marshal_with(recipe_model)
     @api.doc('Create a new recipe')
+    @jwt_required()
     def post(self):
         """Create a new Recipe"""
         data = request.get_json()
@@ -136,6 +157,7 @@ class RecipeResource(Resource):
 
     @api.marshal_with(recipe_model)
     @api.doc('Update a recipe')
+    @jwt_required()
     def put(self, id):
         """Update a recipe by id"""
         data = request.get_json()
@@ -149,6 +171,7 @@ class RecipeResource(Resource):
 
     @api.marshal_with(recipe_model)
     @api.doc('delete a recipe')
+    @jwt_required()
     def delete(self, id):
         """Delete a recipe"""
         recipe_to_Delete = Recipe.query.get_or_404(id)
