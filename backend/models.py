@@ -51,7 +51,7 @@ class User(db.Model):
         db.session.add(self)
         db.session.commit()
         
-    def updatePasssword(self,password):
+    def updatePassword(self,password):
         self.password=password
         db.session.commit
         
