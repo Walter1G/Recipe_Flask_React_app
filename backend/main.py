@@ -23,10 +23,7 @@ def create_app(config):
     api.add_namespace(auth_ns)
         
            
-    # @api.route('/hello')
-    # class HelloResource(Resource):
-    #     def get(self):
-    #         return {"message": "Hello World"}
+   
     
     
     @app.shell_context_processor

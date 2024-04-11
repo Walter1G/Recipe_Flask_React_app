@@ -1,10 +1,10 @@
 from flask_restx import Resource, Namespace, fields
 from flask_jwt_extended import jwt_required
 from models import Recipe
-from flask import request
+from flask import request, make_response
 
 
-recipe_ns = Namespace("recipe", description='A namespace for Recipes')
+recipe_ns = Namespace("recipes", description='A namespace for Recipes')
 
 # model (Serializer)
 recipe_model = recipe_ns.model(
@@ -15,6 +15,11 @@ recipe_model = recipe_ns.model(
         "description": fields.String()
     }
 )
+
+@recipe_ns.route('/hello')
+class HelloResource(Resource):
+    def get(self):
+        return {"message": "Hello World"}
 
 @recipe_ns.route('/recipes')
 class RecipesResource(Resource):
