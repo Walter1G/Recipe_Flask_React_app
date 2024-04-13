@@ -1,28 +1,31 @@
-import React, { useState, useEffect } from 'react'
-import {createRoot} from 'react-dom/client'
+import "bootstrap/dist/css/bootstrap.min.css";
+import React from "react";
+import { createRoot } from "react-dom/client";
+import NavBar from "./components/Navbar";
 // import ReactDom from 'react-dom'
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import HomePage from "./components/HomePage";
+import SignUp from "./components/SignUp";
+import LogIn from "./components/LogIn";
+import CreateRecipe from "./components/CreateRecipe";
+import LogOut from "./components/LogOut";
 
 const App = () => {
-    const [message, setMessage] = useState('')
-    
-    useEffect(() => {
-        fetch('recipes/hello')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.message)
-                setMessage(data.message)
-            })
-        
-    }, [])
+  return (
+    <Router>
+      <div className="container">
+        <NavBar />
+        <Routes>
+          <Route path="/create-recipe" element={<CreateRecipe />} />
+          <Route path="/logout" element={<LogOut />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+};
 
-    return (
-        <div className='container'>
-            <h1>{message} </h1>
-            
-        </div>
-    )
-}
-
-const root = createRoot(document.getElementById('root'))
-root.render(<App/>)
-
+const root = createRoot(document.getElementById("root"));
+root.render(<App />);
