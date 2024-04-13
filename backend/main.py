@@ -6,6 +6,7 @@ from exts import db
 from flask_migrate import Migrate
 from recipes import recipe_ns
 from auth import auth_ns
+from flask_cors import CORS
 
 
 def create_app(config):
@@ -18,6 +19,7 @@ def create_app(config):
     
     api = Api(app, doc='/docs')
     jwt = JWTManager(app)
+    CORS(app)
     
     api.add_namespace(recipe_ns)
     api.add_namespace(auth_ns)
