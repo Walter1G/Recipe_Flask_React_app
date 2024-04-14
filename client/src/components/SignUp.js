@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -14,7 +15,7 @@ const SignUp = () => {
     console.log(password);
     console.log(confirmPassword);
 
-    
+
 
     setUsername('');
     setEmail('');
@@ -83,6 +84,10 @@ const SignUp = () => {
             <Button as="sub" variant="primary" onClick={submitForm}>
               Sign Up
             </Button>
+          </Form.Group>
+          <br></br>
+          <Form.Group>
+            <small>Already have an account? <Link to='/login'>Log In</Link></small>
           </Form.Group>
         </form>
       </div>
