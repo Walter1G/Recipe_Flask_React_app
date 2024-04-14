@@ -1,8 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <div className='home container'>
+      <h1 className='heading'>Welcome to the Recipe World</h1>
+      <Link to='/signup'  className='btn btn-primary btn-lg'>Get Started</Link>
+    </div>
   )
 }
 

@@ -9,11 +9,12 @@ import SignUp from "./components/SignUp";
 import LogIn from "./components/LogIn";
 import CreateRecipe from "./components/CreateRecipe";
 import LogOut from "./components/LogOut";
+import './styles/main.css'
 
 const App = () => {
   return (
     <Router>
-      <div className="container">
+      <div className="">
         <NavBar />
         <Routes>
           <Route path="/create-recipe" element={<CreateRecipe />} />

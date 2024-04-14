@@ -7,10 +7,10 @@ import Navbar from "react-bootstrap/Navbar";
 const NavBar = () => {
   return (
     <>
-      <nav class="navbar navbar-expand-lg  bg-body-tertiary">
+      <nav class="navbar navbar-expand-lg bg-dark  bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
           <Link class="navbar-brand" to="/">
-            Home
+            Recipes 
           </Link>
           <button
             class="navbar-toggler"
@@ -31,22 +31,22 @@ const NavBar = () => {
                 </Link>
               </li>
               <li class="nav-item">
-                <Link class="nav-link" to="/create-recipe">
+                <Link class="nav-link active" to="/create-recipe">
                   Create Recipe
                 </Link>
               </li>
               <li class="nav-item">
-                <Link class="nav-link" to="/signup">
+                <Link class="nav-link active" to="/signup">
                   Sign Up
                 </Link>
               </li>
               <li class="nav-item">
-                <Link class="nav-link" to="/login">
+                <Link class="nav-link active" to="/login">
                   LogIn
                 </Link>
               </li>
               <li class="nav-item">
-                <Link class="nav-link" to="/logout">
+                <Link class="nav-link active" to="/logout">
                   Log Out
                 </Link>
               </li>
