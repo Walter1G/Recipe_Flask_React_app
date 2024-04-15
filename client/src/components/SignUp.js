@@ -1,5 +1,5 @@
-import React from "react";
-import { Form, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -8,6 +8,8 @@ const SignUp = () => {
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
   // const [confirmPassword, setConfirmPassword] = useState("");
+  const [show, setShow] = useState(true);
+  const [serverRes, setServerRes] = useState("");
 
   const {
     register,
@@ -17,46 +19,54 @@ const SignUp = () => {
     reset,
   } = useForm();
 
- 
-    
-
-      
   const submitForm = (data) => {
-      
     if (data.password === data.confirmPassword) {
       const body = {
         username: data.username,
         email: data.email,
-        password:data.password
-      }
+        password: data.password,
+      };
 
       const requestOptions = {
         method: "POST",
         headers: {
-          'content-type':"application/json"
+          "content-type": "application/json",
         },
         body: JSON.stringify(body),
-      }
-      
-      fetch('/auth/signup', requestOptions)
-        .then(response => response.json())
-        .then(data => console.log(data))
-      .catch(err=>console.log(err))
-       reset()
-      //  navigate("/login")
-    
-    }else {
-      alert("Passwords do not match")
+      };
+
+      fetch("/auth/signup", requestOptions)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("data", data);
+          setServerRes(data.message);
+          console.log(serverRes);
+          setShow(true);
+          reset();
+        })
+        .catch((err) => console.log(err));
+    } else {
+      alert("Passwords do not match");
     }
-    
   };
-
-
 
   return (
     <div className="container">
       <div className="form">
-        <h1>Sign Up Page</h1>
+        {show ? (
+          <>
+            <Alert variant="success" onClose={() => setShow(false)} dismissible>
+              <p>{serverRes}</p>
+            </Alert>
+
+            <h1>Sign Up </h1>
+          </>
+        ) : (
+          <h1>Sign Up </h1>
+        )}
+
         <form>
           <Form.Group>
             <Form.Label>User Name</Form.Label>
@@ -80,7 +90,6 @@ const SignUp = () => {
           </Form.Group>
           <br></br>
 
-         
           <Form.Group>
             <Form.Label>Email</Form.Label>
             <Form.Control
@@ -103,7 +112,6 @@ const SignUp = () => {
           </Form.Group>
           <br></br>
 
-          
           <Form.Group>
             <Form.Label>Password</Form.Label>
             <Form.Control
