@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import {useNavigate} from 'react-router-dom'
 
 const SignUp = () => {
   // const [username, setUsername] = useState("");
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
   // const [confirmPassword, setConfirmPassword] = useState("");
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [serverRes, setServerRes] = useState("");
+  const navigate = useNavigate()
 
   const {
     register,
@@ -42,9 +44,10 @@ const SignUp = () => {
         .then((data) => {
           console.log("data", data);
           setServerRes(data.message);
-          console.log(serverRes);
+          // console.log(serverRes);
           setShow(true);
           reset();
+          navigate('/login')
         })
         .catch((err) => console.log(err));
     } else {
