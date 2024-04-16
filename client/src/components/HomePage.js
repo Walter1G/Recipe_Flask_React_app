@@ -1,11 +1,29 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import { Link } from 'react-router-dom'
-import {useAuth} from '../auth'
+import { useAuth } from '../auth'
+import Recipe from './Recipe'
 const LoggedInHome = () => {
+  const [recipes, setRecipes] = useState([])
+  
+  useEffect(() => {
+    fetch('/recipes/recipes')
+      .then(r => r.json())
+      .then(data => {
+      setRecipes(data)
+      })
+    .catch(err=>console.log(err))
+  },[])
+
+
   return (
     <>
       <div className='recipes'>
-      <h1>List of Recipes</h1>
+        <h1>List of Recipes</h1>
+        {
+          recipes.map(recipe => {
+            return <Recipe key={recipe.id} title={recipe.title} description={recipe.description}/>
+          })
+        }
       </div>
     </>
   )

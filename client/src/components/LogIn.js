@@ -35,7 +35,7 @@ const LogIn = () => {
     fetch("/auth/login", requestOptions)
       .then((r) => r.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         login(data.access_token);
         navigate("/");
       })
