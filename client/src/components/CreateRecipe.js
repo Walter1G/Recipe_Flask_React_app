@@ -35,7 +35,7 @@ const CreateRecipe = () => {
     .catch(err=>console.log(err))
   };
   return (
-    <div className="container">
+    <div className=" create-recipe container">
       <h3>Create A Recipe</h3>
       <form>
         <Form.Group>
@@ -88,7 +88,7 @@ const CreateRecipe = () => {
             <p style={{color:"red"}}><small>Description should be less than 255 characters</small></p>
           }
         </Form.Group>
-        {/* <br></br> */}
+        <br></br>
         <Form.Group>
           <Button variant="primary" onClick={handleSubmit(createRecipe)} >
             Save

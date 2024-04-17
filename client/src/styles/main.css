@@ -1,5 +1,10 @@
 .container{
     margin-top: 50px;
+
+}
+.recipes, .create-recipe{
+    max-width: 40vw;
+   
 }
 
 .heading{

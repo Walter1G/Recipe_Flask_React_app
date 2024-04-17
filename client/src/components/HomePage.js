@@ -14,6 +14,7 @@ const LoggedInHome = () => {
   const { register, handleSubmit, reset,setValue, formState:{errors} } = useForm();
 const [recipeId, setRecipeId]=useState()
   const { user } = useAuth(0);
+  let token = localStorage.getItem("REACT_TOKEN_AUTH_KEY")
 
  
   
@@ -52,11 +53,22 @@ const [recipeId, setRecipeId]=useState()
       .then(data => {
         console.log(data)
         reset()
-        const reload = window.location.reload()
-        reload()
+        // const reload = window.location.reload()
+        // reload()
+        getAllRecipes()
+        closeModal()
       })
     .catch(err=>console.log(err))
 
+  }
+
+  const getAllRecipes = () => {
+    fetch("/recipes/recipes")
+      .then((r) => r.json())
+      .then((data) => {
+        setRecipes(data);
+      })
+      .catch((err) => console.log(err));
   }
 
   useEffect(() => {
@@ -67,6 +79,28 @@ const [recipeId, setRecipeId]=useState()
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const deleteRecipe = (id) => {
+    console.log(id);
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${JSON.parse(token)}`
+      },
+      
+    }
+
+    fetch(`recipes/recipe/${id}`, requestOptions)
+      .then(r => r.json())
+      .then(data => {
+        console.log(data);
+        getAllRecipes()
+      })
+      .catch(err=>console.log(err))
+    
+  }
 
   return (
     <>
@@ -150,7 +184,8 @@ const [recipeId, setRecipeId]=useState()
               key={i}
               title={recipe.title}
               description={recipe.description}
-              onClick={()=>showModal(recipe)}
+              onClick={() => showModal(recipe)}
+              onDelete={()=>deleteRecipe(recipe.id)}
             />
           );
         })}
@@ -166,6 +201,9 @@ const LoggedOutHome = () => {
       <Link to="/signup" className="btn btn-primary btn-lg">
         Get Started
       </Link>
+      <small style={{marginLeft:"30px"}}>
+              Already have an account? <Link to="/login">Log In</Link>
+            </small>
     </div>
   );
 };
