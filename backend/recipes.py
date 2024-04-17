@@ -16,10 +16,12 @@ recipe_model = recipe_ns.model(
     }
 )
 
+
 @recipe_ns.route('/hello')
 class HelloResource(Resource):
     def get(self):
         return {"message": "Hello World"}
+
 
 @recipe_ns.route('/recipes')
 class RecipesResource(Resource):
@@ -45,7 +47,7 @@ class RecipesResource(Resource):
         return new_recipe, 201
 
 
-@recipe_ns.route('/recipes/<int:id>')
+@recipe_ns.route('/recipe/<int:id>')
 class RecipeResource(Resource):
     @recipe_ns.marshal_with(recipe_model)
     @recipe_ns.doc('get  a specific recipe by id')
@@ -77,4 +79,3 @@ class RecipeResource(Resource):
         recipe_to_Delete = Recipe.query.get_or_404(id)
         recipe_to_Delete.delete()
         return recipe_to_Delete, 200
-
