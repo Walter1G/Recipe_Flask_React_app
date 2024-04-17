@@ -1,12 +1,20 @@
-import React from 'react'
+import React from "react";
+import { Card } from "react-bootstrap";
 
-const Recipe = ({title,description}) => {
+const Recipe = ({ title, description }) => {
   return (
-      <div className='recipe'>
-          <h1>{title}</h1>
-          <p>{description}</p>
-    </div>
-  )
-}
+    //   <div>
+    //        <h3>{title}</h3>
+    //     <p>{description}</p>
+    //       </div>
 
-export default Recipe
+    <Card className="recipe">
+      <Card.Body>
+              <Card.Title>{title}</Card.Title>
+              <Card.Text>{description}</Card.Text>
+      </Card.Body>
+    </Card>
+  );
+};
+
+export default Recipe;

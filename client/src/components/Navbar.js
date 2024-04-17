@@ -17,7 +17,7 @@ const LoggedInLinks = () => {
         </Link>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="#" onClick={() => logout()}>
+        <a class="nav-link active" href="/" onClick={() => logout()}>
           Log Out
         </a>
       </li>
