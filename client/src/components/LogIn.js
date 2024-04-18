@@ -32,16 +32,30 @@ const LogIn = () => {
       body: JSON.stringify(data),
     };
 
-    fetch("/auth/login", requestOptions)
-      .then((r) => r.json())
-      .then((data) => {
-        // console.log(data);
+    // fetch("/auth/login", requestOptions)
+    //   .then((r) => r.json())
+    //   .then((data) => {
+    //     // console.log(data);
+    //     login(data.access_token);
+    //     navigate("/");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    (async () => {
+      try {
+        const response = await fetch("/auth/login", requestOptions);
+        if (!response.ok) {
+          throw new Error("Failed to login");
+        }
+        const data = await response.json();
+        console.log(data);
         login(data.access_token);
         navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      } catch (error) {
+        console.error(error);
+      }
+    })();
 
     reset();
   };
